@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 17, 2026 at 04:58 AM
+-- Generation Time: Sep 17, 2026 at 05:37 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,6 +32,13 @@ CREATE TABLE `categories` (
   `name` varchar(100) NOT NULL,
   `description` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `description`) VALUES
+(1, 'Hardware', NULL);
 
 -- --------------------------------------------------------
 
@@ -99,6 +106,13 @@ CREATE TABLE `tickets` (
   `closed_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `tickets`
+--
+
+INSERT INTO `tickets` (`id`, `user_id`, `category_id`, `technician_id`, `title`, `description`, `status`, `priority`, `created_at`, `updated_at`, `resolved_at`, `closed_at`) VALUES
+(1, 1, 1, NULL, 'คอมพิวเตอร์เปิดไม่ติด', 'หน้าจอดำ', 'Open', 'Medium', '2026-09-17 10:33:13', '2026-09-17 10:33:13', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -107,13 +121,20 @@ CREATE TABLE `tickets` (
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(150) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `password_hash` varchar(255) NOT NULL,
-  `role` enum('user','technician','admin') DEFAULT 'user',
-  `line_user_id` varchar(100) DEFAULT NULL,
+  `role` enum('User','Technician','Admin') DEFAULT 'User',
+  `line_user_id` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password_hash`, `role`, `line_user_id`, `created_at`) VALUES
+(1, 'Admin', 'admin@example.com', '123456', 'Admin', NULL, '2026-09-17 10:33:13');
 
 --
 -- Indexes for dumped tables
@@ -138,7 +159,7 @@ ALTER TABLE `comments`
 --
 ALTER TABLE `ratings`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `ticket_id` (`ticket_id`);
+  ADD KEY `ticket_id` (`ticket_id`);
 
 --
 -- Indexes for table `status_logs`
@@ -172,7 +193,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `comments`
@@ -196,13 +217,13 @@ ALTER TABLE `status_logs`
 -- AUTO_INCREMENT for table `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
